@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+#Catch if any subcalls fail
+set -e
+
+
+#Catch calls in need of usage help
+if [ $# -eq 0 ] || [ $1 == '-h' ] || [ $1 == '--help' ] || [ $# -gt 2 ]
+then
+    echo Usage: atboot [service name] [/path/to/script]
+    echo atboot creates a systemd service called [service name].service that runs /path/to/script at system boot.
+    echo /path/to/script must be an absolute path.
+    exit 1
+fi
+
+#Ensure script is executable (will also check for script existence)
+chmod +x $2
+
+
+#Create systemd unit file
+
+echo [Unit] > /etc/systemd/system/$1.service
+echo Description=Start $1 with script $2 >> /etc/systemd/system/$1.service
+echo After=multi-user.target >> /etc/systemd/system/$1.service
+echo >> /etc/systemd/system/$1.service
+
+echo [Service] >> /etc/systemd/system/$1.service
+echo ExecStart=$2 >> /etc/systemd/system/$1.service
+echo >> /etc/systemd/system/$1.service
+
+echo [Install] >> /etc/systemd/system/$1.service
+echo WantedBy=graphical.target >> /etc/systemd/system/$1.service
+echo >> /etc/systemd/system/$1.service
+
+systemctl enable $1.service
+

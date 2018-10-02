@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#Start dropbox daemon
+/home/anton/.dropbox-dist/dropboxd&
+
+#Bluetooth connect mouse
+cm&
+
+#Start network manager tray icon
+nm-applet&
+

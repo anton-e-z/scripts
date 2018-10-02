@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ ! -e /media/anton/c ]
+then
+    mkdir /media/anton/c
+fi
+
+mount /dev/nvme0n1p4 /media/anton/c
+
