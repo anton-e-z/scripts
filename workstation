@@ -9,3 +9,6 @@ cm&
 #Start network manager tray icon
 nm-applet&
 
+#Configure screens to be the way I like them
+xrandr --output eDP1 --auto --output DP1 --auto --left-of eDP1
+xrandr --output eDP1 --auto --output DP2 --auto --left-of eDP1
